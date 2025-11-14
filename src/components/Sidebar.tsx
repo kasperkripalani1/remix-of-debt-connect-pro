@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Users, FileText, BarChart3, Settings, Bell } from "lucide-react";
+import { LayoutDashboard, Users, FileText, BarChart3, Settings, Bell, Bot } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -7,6 +7,7 @@ const navItems = [
   { icon: FileText, label: "Debts", path: "/debts" },
   { icon: Users, label: "Customers", path: "/customers" },
   { icon: BarChart3, label: "Analytics", path: "/analytics" },
+  { icon: Bot, label: "AI Bot", path: "/ai-bot" },
   { icon: Bell, label: "Reminders", path: "/reminders" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
@@ -22,7 +23,7 @@ export const Sidebar = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">PACE</h1>
-              <p className="text-xs text-muted-foreground">Debt Collection</p>
+              <p className="text-xs text-muted-foreground">Payments Platform</p>
             </div>
           </div>
         </div>
