@@ -8,6 +8,7 @@ import Debts from "./pages/Debts";
 import Customers from "./pages/Customers";
 import Analytics from "./pages/Analytics";
 import Reminders from "./pages/Reminders";
+import AIBotConfig from "./pages/AIBotConfig";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/debts" element={<Debts />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/ai-bot" element={<AIBotConfig />} />
           <Route path="/reminders" element={<Reminders />} />
           <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
