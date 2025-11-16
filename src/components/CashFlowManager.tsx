@@ -58,6 +58,7 @@ export const CashFlowManager = () => {
             <div>
               <p className="text-sm text-muted-foreground mb-1">Available Cash</p>
               <p className="text-3xl font-bold text-foreground">${cashAvailable.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground mt-1">Cash collected through PACE</p>
             </div>
             <div className="p-3 rounded-lg bg-primary/10">
               <DollarSign className="w-6 h-6 text-primary" />

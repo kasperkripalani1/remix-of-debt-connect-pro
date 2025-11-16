@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Bot, Wand2, MessageSquare, TrendingUp, Settings2, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { AIAgentCard } from "@/components/AIAgentCard";
 
 const AIBotConfig = () => {
   const { toast } = useToast();
@@ -21,6 +22,27 @@ const AIBotConfig = () => {
   const [assertiveness, setAssertiveness] = useState([50]);
   const [enableMultiChannel, setEnableMultiChannel] = useState(true);
   const [enableEscalation, setEnableEscalation] = useState(true);
+
+  // AI Agents state
+  const [messengerEnabled, setMessengerEnabled] = useState(true);
+  const [messengerTone, setMessengerTone] = useState([75]);
+  const [messengerEmpathy, setMessengerEmpathy] = useState([70]);
+  const [messengerAssertiveness, setMessengerAssertiveness] = useState([40]);
+
+  const [negotiatorEnabled, setNegotiatorEnabled] = useState(true);
+  const [negotiatorTone, setNegotiatorTone] = useState([80]);
+  const [negotiatorEmpathy, setNegotiatorEmpathy] = useState([85]);
+  const [negotiatorAssertiveness, setNegotiatorAssertiveness] = useState([60]);
+
+  const [enforcerEnabled, setEnforcerEnabled] = useState(true);
+  const [enforcerTone, setEnforcerTone] = useState([90]);
+  const [enforcerEmpathy, setEnforcerEmpathy] = useState([40]);
+  const [enforcerAssertiveness, setEnforcerAssertiveness] = useState([85]);
+
+  const [assistantEnabled, setAssistantEnabled] = useState(true);
+  const [assistantTone, setAssistantTone] = useState([65]);
+  const [assistantEmpathy, setAssistantEmpathy] = useState([90]);
+  const [assistantAssertiveness, setAssistantAssertiveness] = useState([30]);
 
   const handleSave = () => {
     toast({
@@ -95,8 +117,12 @@ const AIBotConfig = () => {
             </Card>
           </div>
 
-          <Tabs defaultValue="personality" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-card border border-border">
+          <Tabs defaultValue="agents" className="w-full">
+            <TabsList className="grid w-full grid-cols-5 h-auto p-1 bg-card border border-border">
+              <TabsTrigger value="agents" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-3">
+                <Bot className="w-4 h-4 mr-2" />
+                AI Agents
+              </TabsTrigger>
               <TabsTrigger value="personality" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-3">
                 <Wand2 className="w-4 h-4 mr-2" />
                 Personality
@@ -113,9 +139,123 @@ const AIBotConfig = () => {
                 <Zap className="w-4 h-4 mr-2" />
                 Channels
               </TabsTrigger>
-            </TabsList>
+          </TabsList>
 
-            <TabsContent value="personality" className="mt-6 space-y-6">
+          <TabsContent value="agents" className="mt-6 space-y-6">
+            <Card className="p-6 bg-gradient-card border-border">
+              <h3 className="text-xl font-semibold text-foreground mb-2">Specialized AI Agents</h3>
+              <p className="text-muted-foreground mb-6">
+                Configure individual AI agents, each specialized for different stages of the collection process. 
+                Each agent has its own personality, approach, and performance metrics.
+              </p>
+            </Card>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <AIAgentCard
+                name="PACE Messenger"
+                role="Initial Outreach Agent"
+                description="Handles initial contact, payment reminders, and status updates. Maintains a friendly, professional tone to preserve customer relationships."
+                icon="messenger"
+                messagesSent={487}
+                successRate={41}
+                enabled={messengerEnabled}
+                onToggle={setMessengerEnabled}
+                tone={messengerTone[0]}
+                empathy={messengerEmpathy[0]}
+                assertiveness={messengerAssertiveness[0]}
+                onToneChange={setMessengerTone}
+                onEmpathyChange={setMessengerEmpathy}
+                onAssertivenessChange={setMessengerAssertiveness}
+              />
+
+              <AIAgentCard
+                name="PACE Negotiator"
+                role="Payment Plan Specialist"
+                description="Manages payment plan discussions, settlements, and flexible arrangements. Focuses on finding mutually beneficial solutions."
+                icon="negotiator"
+                messagesSent={342}
+                successRate={68}
+                enabled={negotiatorEnabled}
+                onToggle={setNegotiatorEnabled}
+                tone={negotiatorTone[0]}
+                empathy={negotiatorEmpathy[0]}
+                assertiveness={negotiatorAssertiveness[0]}
+                onToneChange={setNegotiatorTone}
+                onEmpathyChange={setNegotiatorEmpathy}
+                onAssertivenessChange={setNegotiatorAssertiveness}
+              />
+
+              <AIAgentCard
+                name="PACE Enforcer"
+                role="Escalation Manager"
+                description="Handles late-stage collections, firm reminders, and pre-legal communications. Uses assertive but professional language."
+                icon="enforcer"
+                messagesSent={156}
+                successRate={52}
+                enabled={enforcerEnabled}
+                onToggle={setEnforcerEnabled}
+                tone={enforcerTone[0]}
+                empathy={enforcerEmpathy[0]}
+                assertiveness={enforcerAssertiveness[0]}
+                onToneChange={setEnforcerTone}
+                onEmpathyChange={setEnforcerEmpathy}
+                onAssertivenessChange={setEnforcerAssertiveness}
+              />
+
+              <AIAgentCard
+                name="PACE Assistant"
+                role="Customer Support Agent"
+                description="Answers customer queries, provides payment guidance, and offers support. Prioritizes empathy and helpfulness."
+                icon="assistant"
+                messagesSent={262}
+                successRate={89}
+                enabled={assistantEnabled}
+                onToggle={setAssistantEnabled}
+                tone={assistantTone[0]}
+                empathy={assistantEmpathy[0]}
+                assertiveness={assistantAssertiveness[0]}
+                onToneChange={setAssistantTone}
+                onEmpathyChange={setAssistantEmpathy}
+                onAssertivenessChange={setAssistantAssertiveness}
+              />
+            </div>
+
+            <Card className="p-6 bg-gradient-card border-border">
+              <h3 className="text-lg font-semibold text-foreground mb-4">Agent Workflow</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold">1</div>
+                  <div className="flex-1">
+                    <p className="font-medium text-foreground">PACE Messenger</p>
+                    <p className="text-sm text-muted-foreground">First contact & reminders (Days 1-15)</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-success/10 text-success font-semibold">2</div>
+                  <div className="flex-1">
+                    <p className="font-medium text-foreground">PACE Negotiator</p>
+                    <p className="text-sm text-muted-foreground">Payment plans & settlements (Days 16-45)</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-warning/10 text-warning font-semibold">3</div>
+                  <div className="flex-1">
+                    <p className="font-medium text-foreground">PACE Enforcer</p>
+                    <p className="text-sm text-muted-foreground">Firm reminders & escalation (Days 46+)</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-accent/10 text-accent font-semibold">★</div>
+                  <div className="flex-1">
+                    <p className="font-medium text-foreground">PACE Assistant</p>
+                    <p className="text-sm text-muted-foreground">Available anytime for customer support</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="personality" className="mt-6 space-y-6">
               <Card className="p-6 bg-gradient-card border-border">
                 <h3 className="text-2xl font-bold text-foreground mb-4">Bot Personality & Communication Style</h3>
                 <p className="text-muted-foreground mb-6">
