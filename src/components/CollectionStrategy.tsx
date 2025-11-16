@@ -11,6 +11,8 @@ interface Strategy {
   currentProgress: number;
   targetAccounts: number;
   expectedRecovery: number;
+  expectedDate: string;
+  debtClassification: "reminder" | "pre-collection" | "collection" | "legal";
   status: "active" | "planned" | "completed";
   priority: "high" | "medium" | "low";
 }
@@ -23,6 +25,8 @@ const strategies: Strategy[] = [
     currentProgress: 65,
     targetAccounts: 24,
     expectedRecovery: 285000,
+    expectedDate: "Q1 2025",
+    debtClassification: "collection",
     status: "active",
     priority: "high",
   },
@@ -33,6 +37,8 @@ const strategies: Strategy[] = [
     currentProgress: 42,
     targetAccounts: 156,
     expectedRecovery: 420000,
+    expectedDate: "Q4 2024",
+    debtClassification: "reminder",
     status: "active",
     priority: "high",
   },
@@ -43,6 +49,8 @@ const strategies: Strategy[] = [
     currentProgress: 28,
     targetAccounts: 50,
     expectedRecovery: 180000,
+    expectedDate: "Q1 2025",
+    debtClassification: "pre-collection",
     status: "active",
     priority: "medium",
   },
@@ -53,16 +61,32 @@ const strategies: Strategy[] = [
     currentProgress: 0,
     targetAccounts: 89,
     expectedRecovery: 215000,
+    expectedDate: "Q2 2025",
+    debtClassification: "reminder",
     status: "planned",
     priority: "medium",
   },
   {
     id: "5",
+    name: "Legal Recovery Initiative",
+    description: "Court proceedings for high-value non-responsive accounts",
+    currentProgress: 15,
+    targetAccounts: 12,
+    expectedRecovery: 450000,
+    expectedDate: "Q3 2025",
+    debtClassification: "legal",
+    status: "active",
+    priority: "high",
+  },
+  {
+    id: "6",
     name: "Q3 Recovery Sprint",
     description: "Completed intensive 60-day collection push",
     currentProgress: 100,
     targetAccounts: 67,
     expectedRecovery: 340000,
+    expectedDate: "Q3 2024",
+    debtClassification: "collection",
     status: "completed",
     priority: "high",
   },
@@ -78,6 +102,13 @@ const priorityConfig = {
   high: { label: "High Priority", color: "bg-destructive/10 text-destructive" },
   medium: { label: "Medium Priority", color: "bg-warning/10 text-warning" },
   low: { label: "Low Priority", color: "bg-muted text-muted-foreground" },
+};
+
+const classificationConfig = {
+  reminder: { label: "Simple Debt Management", icon: "📧", color: "bg-blue-500/10 text-blue-600" },
+  "pre-collection": { label: "Pre-Collection Process", icon: "📞", color: "bg-yellow-500/10 text-yellow-600" },
+  collection: { label: "Collection Process", icon: "💼", color: "bg-orange-500/10 text-orange-600" },
+  legal: { label: "Legal Collection Process", icon: "⚖️", color: "bg-red-500/10 text-red-600" },
 };
 
 export const CollectionStrategy = () => {
@@ -161,18 +192,21 @@ export const CollectionStrategy = () => {
               <div className="space-y-4">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex items-center gap-3 mb-2 flex-wrap">
                       <h4 className="text-lg font-semibold text-foreground">{strategy.name}</h4>
-                      <Badge className={statusConfig[strategy.status].color}>
+                      <Badge variant="outline" className={statusConfig[strategy.status].color}>
                         {statusConfig[strategy.status].label}
                       </Badge>
-                      <Badge className={priorityConfig[strategy.priority].color}>
+                      <Badge variant="outline" className={priorityConfig[strategy.priority].color}>
                         {priorityConfig[strategy.priority].label}
+                      </Badge>
+                      <Badge variant="outline" className={classificationConfig[strategy.debtClassification].color}>
+                        {classificationConfig[strategy.debtClassification].icon} {classificationConfig[strategy.debtClassification].label}
                       </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground mb-4">{strategy.description}</p>
 
-                    <div className="grid grid-cols-3 gap-6 mb-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                       <div>
                         <p className="text-xs text-muted-foreground mb-1">Progress</p>
                         <div className="flex items-center gap-2">
@@ -195,6 +229,12 @@ export const CollectionStrategy = () => {
                         <p className="text-xs text-muted-foreground mb-1">Expected Recovery</p>
                         <span className="text-sm font-semibold text-success">
                           ${strategy.expectedRecovery.toLocaleString()}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground mb-1">Expected By</p>
+                        <span className="text-sm font-semibold text-primary">
+                          {strategy.expectedDate}
                         </span>
                       </div>
                     </div>

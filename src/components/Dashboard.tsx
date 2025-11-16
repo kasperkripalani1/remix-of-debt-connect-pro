@@ -85,7 +85,7 @@ export const Dashboard = () => {
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-3"
           >
             <DollarSign className="w-4 h-4 mr-2" />
-            Cash Flow Optimizer
+            Optimize Priority Debt Collections
           </TabsTrigger>
           <TabsTrigger 
             value="strategy" 
@@ -103,18 +103,19 @@ export const Dashboard = () => {
               <div className="space-y-4">
                 {[
                   { action: "Payment received", customer: "Acme Corporation", amount: 45000, time: "2 hours ago", type: "success" },
-                  { action: "Reminder sent", customer: "TechStart Inc.", amount: 28500, time: "4 hours ago", type: "info" },
-                  { action: "Account overdue", customer: "Enterprise Systems", amount: 92300, time: "6 hours ago", type: "warning" },
-                  { action: "Payment plan created", customer: "Global Solutions", amount: 67200, time: "1 day ago", type: "info" },
+                  { action: "New overdue account", customer: "TechStart Inc.", amount: 28500, time: "3 hours ago", type: "warning" },
+                  { action: "Payment plan created", customer: "Global Solutions", amount: 67200, time: "5 hours ago", type: "info" },
+                  { action: "Review payment plan", customer: "Enterprise Systems", amount: 92300, time: "8 hours ago", type: "info" },
+                  { action: "Payment plan negotiated", customer: "Innovation Labs", amount: 15800, time: "1 day ago", type: "info" },
                 ].map((activity, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-card border border-border">
-                    <div>
+                  <div key={i} className="flex items-center justify-between gap-4 p-3 rounded-lg bg-background/50 hover:bg-background transition-colors">
+                    <div className="flex-1 min-w-0">
                       <p className="font-medium text-foreground">{activity.action}</p>
-                      <p className="text-sm text-muted-foreground">{activity.customer}</p>
+                      <p className="text-sm text-muted-foreground truncate">{activity.customer}</p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-foreground">${activity.amount.toLocaleString()}</p>
-                      <p className="text-xs text-muted-foreground">{activity.time}</p>
+                    <div className="text-right shrink-0">
+                      <p className="font-semibold text-foreground whitespace-nowrap">${activity.amount.toLocaleString()}</p>
+                      <p className="text-sm text-muted-foreground whitespace-nowrap">{activity.time}</p>
                     </div>
                   </div>
                 ))}

@@ -89,7 +89,7 @@ const Analytics = () => {
             </Card>
 
             <Card className="p-6 bg-gradient-card border-border md:col-span-2">
-              <h3 className="text-xl font-semibold text-foreground mb-4">Aging Report</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-4">Days Receivables Outstanding (DRO) Report</h3>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={agingReportData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 20%, 18%)" />
@@ -109,23 +109,35 @@ const Analytics = () => {
             </Card>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-5">
             <Card className="p-6 bg-gradient-card border-border">
-              <h4 className="text-sm font-medium text-muted-foreground mb-2">Average Collection Time</h4>
+              <h4 className="text-sm font-medium text-muted-foreground mb-2">Days Receivables Outstanding (DRO)</h4>
               <p className="text-3xl font-bold text-foreground">42 days</p>
               <p className="text-sm text-success mt-2">-5 days vs last quarter</p>
             </Card>
 
             <Card className="p-6 bg-gradient-card border-border">
-              <h4 className="text-sm font-medium text-muted-foreground mb-2">Success Rate</h4>
+              <h4 className="text-sm font-medium text-muted-foreground mb-2">Days Sales Outstanding (DSO)</h4>
+              <p className="text-3xl font-bold text-foreground">38 days</p>
+              <p className="text-sm text-success mt-2">-3 days vs last quarter</p>
+            </Card>
+
+            <Card className="p-6 bg-gradient-card border-border">
+              <h4 className="text-sm font-medium text-muted-foreground mb-2">Collection Effectiveness Index (CEI)</h4>
               <p className="text-3xl font-bold text-foreground">87.5%</p>
               <p className="text-sm text-success mt-2">+3.2% vs last quarter</p>
             </Card>
 
             <Card className="p-6 bg-gradient-card border-border">
-              <h4 className="text-sm font-medium text-muted-foreground mb-2">Recovery Rate</h4>
-              <p className="text-3xl font-bold text-foreground">92.3%</p>
-              <p className="text-sm text-success mt-2">+1.8% vs last quarter</p>
+              <h4 className="text-sm font-medium text-muted-foreground mb-2">Average Days to Payment</h4>
+              <p className="text-3xl font-bold text-foreground">35 days</p>
+              <p className="text-sm text-success mt-2">-4 days vs last quarter</p>
+            </Card>
+
+            <Card className="p-6 bg-gradient-card border-border">
+              <h4 className="text-sm font-medium text-muted-foreground mb-2">Roll Rate</h4>
+              <p className="text-3xl font-bold text-foreground">12.3%</p>
+              <p className="text-sm text-success mt-2">-2.1% vs last quarter</p>
             </Card>
           </div>
         </div>

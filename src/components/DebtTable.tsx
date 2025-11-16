@@ -27,6 +27,7 @@ interface Debt {
   amount: number;
   dueDate: string;
   status: "paid" | "pending" | "overdue" | "partial";
+  classification: "reminder" | "pre-collection" | "collection" | "legal";
   lastContact: string;
 }
 
@@ -38,6 +39,7 @@ const mockDebts: Debt[] = [
     amount: 45000,
     dueDate: "2024-11-20",
     status: "overdue",
+    classification: "collection",
     lastContact: "2 days ago",
   },
   {
@@ -47,6 +49,7 @@ const mockDebts: Debt[] = [
     amount: 28500,
     dueDate: "2024-11-25",
     status: "pending",
+    classification: "reminder",
     lastContact: "5 days ago",
   },
   {
@@ -56,6 +59,7 @@ const mockDebts: Debt[] = [
     amount: 67200,
     dueDate: "2024-11-15",
     status: "partial",
+    classification: "pre-collection",
     lastContact: "1 day ago",
   },
   {
@@ -65,6 +69,7 @@ const mockDebts: Debt[] = [
     amount: 15800,
     dueDate: "2024-11-30",
     status: "pending",
+    classification: "reminder",
     lastContact: "1 week ago",
   },
   {
@@ -74,6 +79,7 @@ const mockDebts: Debt[] = [
     amount: 92300,
     dueDate: "2024-11-10",
     status: "overdue",
+    classification: "legal",
     lastContact: "3 days ago",
   },
 ];
@@ -83,6 +89,13 @@ const statusConfig = {
   pending: { label: "Pending", className: "bg-warning/10 text-warning hover:bg-warning/20" },
   overdue: { label: "Overdue", className: "bg-destructive/10 text-destructive hover:bg-destructive/20" },
   partial: { label: "Partial", className: "bg-accent/10 text-accent hover:bg-accent/20" },
+};
+
+const classificationConfig = {
+  reminder: { label: "Simple Debt Management", icon: "📧", className: "bg-blue-500/10 text-blue-600" },
+  "pre-collection": { label: "Pre-Collection", icon: "📞", className: "bg-yellow-500/10 text-yellow-600" },
+  collection: { label: "Collection", icon: "💼", className: "bg-orange-500/10 text-orange-600" },
+  legal: { label: "Legal Collection", icon: "⚖️", className: "bg-red-500/10 text-red-600" },
 };
 
 export const DebtTable = () => {
@@ -142,6 +155,7 @@ export const DebtTable = () => {
                 <TableHead className="font-semibold">Amount</TableHead>
                 <TableHead className="font-semibold">Due Date</TableHead>
                 <TableHead className="font-semibold">Status</TableHead>
+                <TableHead className="font-semibold">Classification</TableHead>
                 <TableHead className="font-semibold">Last Contact</TableHead>
                 <TableHead className="text-right font-semibold">Action</TableHead>
               </TableRow>
@@ -158,6 +172,11 @@ export const DebtTable = () => {
                   <TableCell>
                     <Badge className={statusConfig[debt.status].className}>
                       {statusConfig[debt.status].label}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className={classificationConfig[debt.classification].className}>
+                      {classificationConfig[debt.classification].icon} {classificationConfig[debt.classification].label}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-muted-foreground">{debt.lastContact}</TableCell>
