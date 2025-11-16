@@ -19,70 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search, Filter, ChevronRight } from "lucide-react";
-
-interface Debt {
-  id: string;
-  customer: string;
-  invoiceNumber: string;
-  amount: number;
-  dueDate: string;
-  status: "paid" | "pending" | "overdue" | "partial";
-  classification: "reminder" | "pre-collection" | "collection" | "legal";
-  lastContact: string;
-}
-
-const mockDebts: Debt[] = [
-  {
-    id: "1",
-    customer: "Acme Corporation",
-    invoiceNumber: "INV-2024-001",
-    amount: 45000,
-    dueDate: "2024-11-20",
-    status: "overdue",
-    classification: "collection",
-    lastContact: "2 days ago",
-  },
-  {
-    id: "2",
-    customer: "TechStart Inc.",
-    invoiceNumber: "INV-2024-002",
-    amount: 28500,
-    dueDate: "2024-11-25",
-    status: "pending",
-    classification: "reminder",
-    lastContact: "5 days ago",
-  },
-  {
-    id: "3",
-    customer: "Global Solutions Ltd",
-    invoiceNumber: "INV-2024-003",
-    amount: 67200,
-    dueDate: "2024-11-15",
-    status: "partial",
-    classification: "pre-collection",
-    lastContact: "1 day ago",
-  },
-  {
-    id: "4",
-    customer: "Innovation Labs",
-    invoiceNumber: "INV-2024-004",
-    amount: 15800,
-    dueDate: "2024-11-30",
-    status: "pending",
-    classification: "reminder",
-    lastContact: "1 week ago",
-  },
-  {
-    id: "5",
-    customer: "Enterprise Systems",
-    invoiceNumber: "INV-2024-005",
-    amount: 92300,
-    dueDate: "2024-11-10",
-    status: "overdue",
-    classification: "legal",
-    lastContact: "3 days ago",
-  },
-];
+import { useDebts } from "@/hooks/useDebts";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const statusConfig = {
   paid: { label: "Paid", className: "bg-success/10 text-success hover:bg-success/20" },
@@ -101,11 +39,15 @@ const classificationConfig = {
 export const DebtTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const { debts, isLoading } = useDebts();
 
-  const filteredDebts = mockDebts.filter((debt) => {
+  const filteredDebts = debts.filter((debt) => {
+    const customerName = debt.customers?.name || "";
+    const company = debt.customers?.company || "";
     const matchesSearch =
-      debt.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      debt.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase());
+      customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      debt.invoice_number.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === "all" || debt.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -161,33 +103,51 @@ export const DebtTable = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredDebts.map((debt) => (
-                <TableRow key={debt.id} className="hover:bg-muted/30 transition-colors">
-                  <TableCell className="font-medium">{debt.customer}</TableCell>
-                  <TableCell className="text-muted-foreground">{debt.invoiceNumber}</TableCell>
-                  <TableCell className="font-semibold text-foreground">
-                    ${debt.amount.toLocaleString()}
-                  </TableCell>
-                  <TableCell>{new Date(debt.dueDate).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <Badge className={statusConfig[debt.status].className}>
-                      {statusConfig[debt.status].label}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className={classificationConfig[debt.classification].className}>
-                      {classificationConfig[debt.classification].icon} {classificationConfig[debt.classification].label}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{debt.lastContact}</TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="sm" className="text-primary hover:text-primary">
-                      View
-                      <ChevronRight className="w-4 h-4 ml-1" />
-                    </Button>
+              {isLoading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <TableRow key={i}>
+                    <TableCell colSpan={8}>
+                      <Skeleton className="h-8 w-full" />
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : filteredDebts.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
+                    No debts found
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                filteredDebts.map((debt) => (
+                  <TableRow key={debt.id} className="hover:bg-muted/30 transition-colors">
+                    <TableCell className="font-medium">{debt.customers?.name || "N/A"}</TableCell>
+                    <TableCell className="text-muted-foreground">{debt.invoice_number}</TableCell>
+                    <TableCell className="font-semibold text-foreground">
+                      ${Number(debt.amount).toLocaleString()}
+                    </TableCell>
+                    <TableCell>{new Date(debt.due_date).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      <Badge className={statusConfig[debt.status].className}>
+                        {statusConfig[debt.status].label}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className={classificationConfig[debt.classification].className}>
+                        {classificationConfig[debt.classification].icon} {classificationConfig[debt.classification].label}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {debt.last_contact ? new Date(debt.last_contact).toLocaleDateString() : "Never"}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="ghost" size="sm" className="text-primary hover:text-primary">
+                        View
+                        <ChevronRight className="w-4 h-4 ml-1" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>

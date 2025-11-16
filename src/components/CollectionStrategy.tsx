@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Target, Users, Phone, Mail, TrendingUp, CheckCircle2 } from "lucide-react";
+import { useStrategies } from "@/hooks/useStrategies";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Strategy {
   id: string;
@@ -112,9 +114,13 @@ const classificationConfig = {
 };
 
 export const CollectionStrategy = () => {
+  const { strategies, isLoading } = useStrategies();
+  
   const activeStrategies = strategies.filter((s) => s.status === "active");
-  const totalExpectedRecovery = activeStrategies.reduce((sum, s) => sum + s.expectedRecovery, 0);
-  const averageProgress = activeStrategies.reduce((sum, s) => sum + s.currentProgress, 0) / activeStrategies.length;
+  const totalExpectedRecovery = activeStrategies.reduce((sum, s) => sum + Number(s.expected_recovery), 0);
+  const averageProgress = activeStrategies.length > 0 
+    ? activeStrategies.reduce((sum, s) => sum + s.current_progress, 0) / activeStrategies.length 
+    : 0;
 
   return (
     <div className="space-y-6">
@@ -137,7 +143,7 @@ export const CollectionStrategy = () => {
             <div>
               <p className="text-sm text-muted-foreground mb-1">Target Accounts</p>
               <p className="text-3xl font-bold text-foreground">
-                {activeStrategies.reduce((sum, s) => sum + s.targetAccounts, 0)}
+                {activeStrategies.reduce((sum, s) => sum + s.target_accounts, 0)}
               </p>
             </div>
             <div className="p-3 rounded-lg bg-accent/10">
@@ -187,7 +193,18 @@ export const CollectionStrategy = () => {
         </div>
 
         <div className="space-y-4">
-          {strategies.map((strategy) => (
+          {isLoading ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <Card key={i} className="p-5">
+                <Skeleton className="h-32 w-full" />
+              </Card>
+            ))
+          ) : strategies.length === 0 ? (
+            <Card className="p-8 text-center">
+              <p className="text-muted-foreground">No collection strategies found</p>
+            </Card>
+          ) : (
+            strategies.map((strategy) => (
             <Card key={strategy.id} className="p-5 bg-card border-border hover:shadow-md transition-all">
               <div className="space-y-4">
                 <div className="flex items-start justify-between">
@@ -200,8 +217,8 @@ export const CollectionStrategy = () => {
                       <Badge variant="outline" className={priorityConfig[strategy.priority].color}>
                         {priorityConfig[strategy.priority].label}
                       </Badge>
-                      <Badge variant="outline" className={classificationConfig[strategy.debtClassification].color}>
-                        {classificationConfig[strategy.debtClassification].icon} {classificationConfig[strategy.debtClassification].label}
+                      <Badge variant="outline" className={classificationConfig[strategy.debt_classification].color}>
+                        {classificationConfig[strategy.debt_classification].icon} {classificationConfig[strategy.debt_classification].label}
                       </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground mb-4">{strategy.description}</p>
@@ -210,9 +227,9 @@ export const CollectionStrategy = () => {
                       <div>
                         <p className="text-xs text-muted-foreground mb-1">Progress</p>
                         <div className="flex items-center gap-2">
-                          <Progress value={strategy.currentProgress} className="flex-1 h-2" />
+                          <Progress value={strategy.current_progress} className="flex-1 h-2" />
                           <span className="text-sm font-semibold text-foreground">
-                            {strategy.currentProgress}%
+                            {strategy.current_progress}%
                           </span>
                         </div>
                       </div>
@@ -221,20 +238,20 @@ export const CollectionStrategy = () => {
                         <div className="flex items-center gap-2">
                           <Users className="w-4 h-4 text-muted-foreground" />
                           <span className="text-sm font-semibold text-foreground">
-                            {strategy.targetAccounts}
+                            {strategy.target_accounts}
                           </span>
                         </div>
                       </div>
                       <div>
                         <p className="text-xs text-muted-foreground mb-1">Expected Recovery</p>
                         <span className="text-sm font-semibold text-success">
-                          ${strategy.expectedRecovery.toLocaleString()}
+                          ${Number(strategy.expected_recovery).toLocaleString()}
                         </span>
                       </div>
                       <div>
                         <p className="text-xs text-muted-foreground mb-1">Expected By</p>
                         <span className="text-sm font-semibold text-primary">
-                          {strategy.expectedDate}
+                          {strategy.expected_date}
                         </span>
                       </div>
                     </div>
@@ -272,7 +289,8 @@ export const CollectionStrategy = () => {
                 </div>
               </div>
             </Card>
-          ))}
+          ))
+          )}
         </div>
       </Card>
     </div>
