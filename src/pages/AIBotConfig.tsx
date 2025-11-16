@@ -45,6 +45,20 @@ const AIBotConfig = () => {
   const [assistantAssertiveness, setAssistantAssertiveness] = useState([30]);
 
   const handleSave = () => {
+    // In a real app, this would save to the backend
+    console.log("AI Bot Configuration saved:", {
+      tone,
+      formality,
+      empathy,
+      assertiveness,
+      messengerEnabled,
+      negotiatorEnabled,
+      enforcerEnabled,
+      assistantEnabled,
+      enableMultiChannel,
+      enableEscalation,
+    });
+    
     toast({
       title: "Settings Saved",
       description: "AI bot configuration has been updated successfully.",
