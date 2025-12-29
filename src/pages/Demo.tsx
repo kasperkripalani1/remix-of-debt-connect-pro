@@ -2,7 +2,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { Dashboard } from "@/components/Dashboard";
 import { DebtTable } from "@/components/DebtTable";
 
-const Index = () => {
+const Demo = () => {
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
@@ -16,4 +16,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Demo;
