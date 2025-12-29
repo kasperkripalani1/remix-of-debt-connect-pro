@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import logoDark from "@/assets/logo-asset-8.svg";
 
 const benefits = [
   {
@@ -58,11 +59,8 @@ const Home = () => {
       {/* Navigation */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-lg font-bold text-primary-foreground">P</span>
-            </div>
-            <span className="text-xl font-bold">PACE Payments</span>
+          <Link to="/" className="flex items-center">
+            <img src={logoDark} alt="PACE Payments" className="h-8" />
           </Link>
           <div className="flex items-center gap-4">
             <Link to="/">
@@ -225,11 +223,8 @@ const Home = () => {
       {/* Footer */}
       <footer className="py-8 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-primary flex items-center justify-center">
-              <span className="text-sm font-bold text-primary-foreground">P</span>
-            </div>
-            <span className="font-semibold">PACE Payments</span>
+          <div className="flex items-center">
+            <img src={logoDark} alt="PACE Payments" className="h-6" />
           </div>
           <p className="text-muted-foreground text-sm">© 2025 PACE Payments. All rights reserved.</p>
         </div>
