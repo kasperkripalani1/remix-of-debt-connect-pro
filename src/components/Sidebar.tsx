@@ -3,7 +3,7 @@ import { LayoutDashboard, Users, FileText, BarChart3, Settings, Bell, Bot } from
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { icon: LayoutDashboard, label: "Dashboard", path: "/demo" },
   { icon: FileText, label: "Debts", path: "/debts" },
   { icon: Users, label: "Customers", path: "/customers" },
   { icon: BarChart3, label: "Analytics", path: "/analytics" },
