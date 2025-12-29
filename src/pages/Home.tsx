@@ -11,10 +11,12 @@ import {
   BarChart3,
   Zap,
   Globe,
-  HeartHandshake
+  HeartHandshake,
+  Calendar
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import CalScheduler from "@/components/CalScheduler";
 import logoFull from "@/assets/logo-asset-3.svg";
 import logoDark from "@/assets/logo-asset-8.svg";
 
@@ -223,9 +225,12 @@ const Home = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-              Schedule a Call
-            </Button>
+            <CalScheduler>
+              <Button size="lg" variant="outline" className="text-lg px-8 py-6">
+                <Calendar className="mr-2 h-5 w-5" />
+                Schedule a Call
+              </Button>
+            </CalScheduler>
           </div>
         </div>
       </section>
