@@ -14,6 +14,7 @@ import Analytics from "./pages/Analytics";
 import Reminders from "./pages/Reminders";
 import AIBotConfig from "./pages/AIBotConfig";
 import Settings from "./pages/Settings";
+import CostCalculator from "./pages/CostCalculator";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/ai-bot" element={<AIBotConfig />} />
           <Route path="/reminders" element={<Reminders />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/cost-calculator" element={<CostCalculator />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
