@@ -105,10 +105,6 @@ const Home = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <Zap className="w-4 h-4" />
-                AI-Powered Debt Collection
-              </div>
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight mb-6">
                 We're rethinking{" "}
                 <span className="text-primary">debt collection.</span>
