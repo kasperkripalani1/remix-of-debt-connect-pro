@@ -17,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import logoDark from "@/assets/logo-asset-8.svg";
+import logoFull from "@/assets/logo-asset-3.svg";
 
 const benefits = [
   {
@@ -68,7 +68,7 @@ const Consumer = () => {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img src={logoDark} alt="PACE Payments" className="h-8" />
+            <img src={logoFull} alt="PACE Payments" className="h-8" />
           </Link>
           <div className="flex items-center gap-4">
             <Link to="/">
@@ -243,7 +243,7 @@ const Consumer = () => {
       <footer className="py-8 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center">
-            <img src={logoDark} alt="PACE Payments" className="h-6" />
+            <img src={logoFull} alt="PACE Payments" className="h-6" />
           </div>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
