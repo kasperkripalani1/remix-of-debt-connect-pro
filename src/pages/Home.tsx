@@ -16,12 +16,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-const stats = [
-  { value: "98%", label: "Collection Rate" },
-  { value: "45%", label: "Faster Recovery" },
-  { value: "500+", label: "Enterprise Clients" },
-  { value: "£2B+", label: "Recovered Annually" },
-];
 
 const features = [
   {
@@ -169,19 +163,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-4xl lg:text-5xl font-bold text-primary mb-2">{stat.value}</p>
-                <p className="text-muted-foreground">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Features Section */}
       <section id="features" className="py-24 px-6">
