@@ -21,6 +21,7 @@ import {
   Settings2
 } from "lucide-react";
 import { toast } from "sonner";
+import logoDark from "@/assets/logo-asset-8.svg";
 
 type Step = "config" | "portal" | "payment-plan";
 
@@ -238,8 +239,8 @@ const ConsumerDemo = () => {
             <div className="max-w-4xl mx-auto px-4 py-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-2xl font-bold text-foreground">PACE</h1>
-                  <p className="text-sm text-muted-foreground">Payment Plan Setup</p>
+                  <img src={logoDark} alt="PACE Payments" className="h-8" />
+                  <p className="text-sm text-muted-foreground mt-1">Payment Plan Setup</p>
                 </div>
                 <Badge variant="outline" className="text-xs">
                   <CheckCircle2 className="w-3 h-3 mr-1" />
@@ -349,8 +350,8 @@ const ConsumerDemo = () => {
           <div className="max-w-4xl mx-auto px-4 py-6">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-foreground">PACE</h1>
-                <p className="text-sm text-muted-foreground">Secure Payment Portal</p>
+                <img src={logoDark} alt="PACE Payments" className="h-8" />
+                <p className="text-sm text-muted-foreground mt-1">Secure Payment Portal</p>
               </div>
               <div className="flex items-center gap-2">
                 <Button 
