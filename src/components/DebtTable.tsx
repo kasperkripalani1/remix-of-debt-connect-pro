@@ -43,10 +43,8 @@ export const DebtTable = () => {
 
   const filteredDebts = debts.filter((debt) => {
     const customerName = debt.customers?.name || "";
-    const company = debt.customers?.company || "";
     const matchesSearch =
       customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      company.toLowerCase().includes(searchTerm.toLowerCase()) ||
       debt.invoice_number.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === "all" || debt.status === statusFilter;
     return matchesSearch && matchesStatus;
@@ -57,15 +55,15 @@ export const DebtTable = () => {
       <div className="space-y-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-foreground">Outstanding Debts</h2>
-            <p className="text-muted-foreground">Manage and track payment collection</p>
+            <h2 className="text-2xl font-bold text-foreground">Consumer Accounts</h2>
+            <p className="text-muted-foreground">Manage and track consumer payment collection</p>
           </div>
           
           <div className="flex flex-col gap-3 sm:flex-row">
             <div className="relative flex-1 sm:w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
-                placeholder="Search customers or invoices..."
+                placeholder="Search consumers or accounts..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -92,8 +90,8 @@ export const DebtTable = () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/50">
-                <TableHead className="font-semibold">Customer</TableHead>
-                <TableHead className="font-semibold">Invoice</TableHead>
+                <TableHead className="font-semibold">Consumer</TableHead>
+                <TableHead className="font-semibold">Account #</TableHead>
                 <TableHead className="font-semibold">Amount</TableHead>
                 <TableHead className="font-semibold">Due Date</TableHead>
                 <TableHead className="font-semibold">Status</TableHead>
@@ -114,7 +112,7 @@ export const DebtTable = () => {
               ) : filteredDebts.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
-                    No debts found
+                    No consumer accounts found
                   </TableCell>
                 </TableRow>
               ) : (
@@ -154,7 +152,7 @@ export const DebtTable = () => {
 
         {filteredDebts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">No debts found matching your criteria</p>
+            <p className="text-muted-foreground">No consumer accounts found matching your criteria</p>
           </div>
         )}
       </div>
