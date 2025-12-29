@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Business from "./pages/Business";
 import Consumer from "./pages/Consumer";
 import Demo from "./pages/Demo";
+import ConsumerDemo from "./pages/ConsumerDemo";
 import Debts from "./pages/Debts";
 import Customers from "./pages/Customers";
 import Analytics from "./pages/Analytics";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/business" element={<Business />} />
           <Route path="/consumer" element={<Consumer />} />
           <Route path="/demo" element={<Demo />} />
+          <Route path="/consumer-demo" element={<ConsumerDemo />} />
           <Route path="/debts" element={<Debts />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/analytics" element={<Analytics />} />
