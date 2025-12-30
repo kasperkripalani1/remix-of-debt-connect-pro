@@ -10,6 +10,7 @@ import Demo from "./pages/Demo";
 import ConsumerDemo from "./pages/ConsumerDemo";
 import Debts from "./pages/Debts";
 import Customers from "./pages/Customers";
+import CustomerDetail from "./pages/CustomerDetail";
 import Analytics from "./pages/Analytics";
 import Reminders from "./pages/Reminders";
 import AIBotConfig from "./pages/AIBotConfig";
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/consumer-demo" element={<ConsumerDemo />} />
           <Route path="/debts" element={<Debts />} />
           <Route path="/customers" element={<Customers />} />
+          <Route path="/customers/maximilian-berger" element={<CustomerDetail />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/ai-bot" element={<AIBotConfig />} />
           <Route path="/reminders" element={<Reminders />} />

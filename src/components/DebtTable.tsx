@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,8 +20,66 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search, Filter, ChevronRight } from "lucide-react";
-import { useDebts } from "@/hooks/useDebts";
 import { Skeleton } from "@/components/ui/skeleton";
+
+// Demo data for the table - German customer data
+const demoDebts = [
+  {
+    id: "1",
+    customerName: "Maximilian Berger",
+    invoiceNumber: "INV-2024-001",
+    amount: 1102,
+    dueDate: "2024-11-20",
+    status: "overdue" as const,
+    classification: "collection" as const,
+    lastContact: "2025-11-14",
+    hasDetailPage: true,
+  },
+  {
+    id: "2",
+    customerName: "Elena Petrova",
+    invoiceNumber: "INV-2024-002",
+    amount: 2450,
+    dueDate: "2024-12-15",
+    status: "pending" as const,
+    classification: "reminder" as const,
+    lastContact: "2025-11-10",
+    hasDetailPage: false,
+  },
+  {
+    id: "3",
+    customerName: "Jonas K.",
+    invoiceNumber: "INV-2024-003",
+    amount: 890,
+    dueDate: "2024-11-28",
+    status: "partial" as const,
+    classification: "pre-collection" as const,
+    lastContact: "2025-11-08",
+    hasDetailPage: false,
+  },
+  {
+    id: "4",
+    customerName: "Sabine Wagner",
+    invoiceNumber: "INV-2024-004",
+    amount: 1750,
+    dueDate: "2024-12-05",
+    status: "pending" as const,
+    classification: "reminder" as const,
+    lastContact: "2025-11-12",
+    hasDetailPage: false,
+  },
+  {
+    id: "5",
+    customerName: "Mehmet Yilmaz",
+    invoiceNumber: "INV-2024-005",
+    amount: 3200,
+    dueDate: "2024-10-30",
+    status: "overdue" as const,
+    classification: "legal" as const,
+    lastContact: "2025-11-05",
+    hasDetailPage: false,
+  },
+];
 
 const statusConfig = {
   paid: { label: "Paid", className: "bg-success/10 text-success hover:bg-success/20" },
@@ -36,19 +95,33 @@ const classificationConfig = {
   legal: { label: "Legal Collection", icon: "⚖️", className: "bg-red-500/10 text-red-600" },
 };
 
+const formatDateDE = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+};
+
 export const DebtTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
-  const { debts, isLoading } = useDebts();
+  const navigate = useNavigate();
 
-  const filteredDebts = debts.filter((debt) => {
-    const customerName = debt.customers?.name || "";
+  const filteredDebts = demoDebts.filter((debt) => {
     const matchesSearch =
-      customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      debt.invoice_number.toLowerCase().includes(searchTerm.toLowerCase());
+      debt.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      debt.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === "all" || debt.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const handleViewClick = (debt: typeof demoDebts[0]) => {
+    if (debt.hasDetailPage) {
+      navigate("/customers/maximilian-berger");
+    }
+  };
 
   return (
     <Card className="p-6">
@@ -101,29 +174,21 @@ export const DebtTable = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {isLoading ? (
-                Array.from({ length: 5 }).map((_, i) => (
-                  <TableRow key={i}>
-                    <TableCell colSpan={8}>
-                      <Skeleton className="h-8 w-full" />
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : filteredDebts.length === 0 ? (
+              {filteredDebts.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
-                    No consumer accounts found
+                    Keine Kundenkonten gefunden
                   </TableCell>
                 </TableRow>
               ) : (
                 filteredDebts.map((debt) => (
                   <TableRow key={debt.id} className="hover:bg-muted/30 transition-colors">
-                    <TableCell className="font-medium">{debt.customers?.name || "N/A"}</TableCell>
-                    <TableCell className="text-muted-foreground">{debt.invoice_number}</TableCell>
+                    <TableCell className="font-medium">{debt.customerName}</TableCell>
+                    <TableCell className="text-muted-foreground">{debt.invoiceNumber}</TableCell>
                     <TableCell className="font-semibold text-foreground">
-                      ${Number(debt.amount).toLocaleString()}
+                      €{Number(debt.amount).toLocaleString("de-DE", { minimumFractionDigits: 2 })}
                     </TableCell>
-                    <TableCell>{new Date(debt.due_date).toLocaleDateString()}</TableCell>
+                    <TableCell>{formatDateDE(debt.dueDate)}</TableCell>
                     <TableCell>
                       <Badge className={statusConfig[debt.status].className}>
                         {statusConfig[debt.status].label}
@@ -135,10 +200,15 @@ export const DebtTable = () => {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {debt.last_contact ? new Date(debt.last_contact).toLocaleDateString() : "Never"}
+                      {formatDateDE(debt.lastContact)}
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="sm" className="text-primary hover:text-primary">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-primary hover:text-primary"
+                        onClick={() => handleViewClick(debt)}
+                      >
                         View
                         <ChevronRight className="w-4 h-4 ml-1" />
                       </Button>
