@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/Sidebar";
-import { PasswordProtection } from "@/components/PasswordProtection";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -97,8 +96,7 @@ Mit freundlichen Grüßen,
 Ihr Inkasso-Team`;
 
   return (
-    <PasswordProtection>
-      <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background">
         <Sidebar />
         <main className="ml-64 p-8">
           <div className="max-w-7xl mx-auto space-y-6">
@@ -720,7 +718,6 @@ Ihr Inkasso-Team`;
           </div>
         </main>
       </div>
-    </PasswordProtection>
   );
 };
 
